@@ -18,6 +18,11 @@ namespace AGLCodeChallenge
         {
             DisplayDatafromService(url);
         }
+        /// <summary>
+        /// Reads the data from JSON service using httpclient.
+        /// Displays according to the requested format.
+        /// </summary>
+        /// <param name="uri"></param>
         private async void DisplayDatafromService(string uri)
         {
             string jsonData = null;
@@ -46,6 +51,10 @@ namespace AGLCodeChallenge
             }
         }
 
+        /// <summary>
+        /// Displays list of pets in alphabetical order under owner's gender.
+        /// </summary>
+        /// <param name="jsonData"></param>
         private void DisplayPetsList(string jsonData)
         {   try
             { 
@@ -75,15 +84,30 @@ namespace AGLCodeChallenge
             
         }
 
-        private static void DisplayElements(IEnumerable<string> nameList, string gender)
+        private void DisplayElements(IEnumerable<string> nameList, string gender)
         {
-            Console.WriteLine(gender);
-            nameList.ToList().ForEach(mcats => Console.WriteLine($"\t{mcats}"));
-            Console.WriteLine();
-            Console.WriteLine();
+            if (nameList.Any())
+            {
+                Console.WriteLine(gender);
+                nameList.ToList().ForEach(mcats => Console.WriteLine($"\t{mcats}"));
+                Console.WriteLine();
+                Console.WriteLine();
+
+            }
+            else
+            {
+                WriteMessage("List is empty");
+            }
         }
 
-
+        /// <summary>
+        /// Retrives the pets information from List<people> 
+        /// according to pettype and owner's gender
+        /// </summary>
+        /// <param name="gender"></param>
+        /// <param name="peopleList"></param>
+        /// <param name="pettype"></param>
+        /// <returns>String list</returns>
         private List<string> RetrivePetsByType(string gender, List<People> peopleList,string pettype)
         {
             List<string> petByGenderlist = new List<string>();
@@ -110,7 +134,11 @@ namespace AGLCodeChallenge
             return petByGenderlist;
 
         }
-
+        /// <summary>
+        /// Deserialize data extracted from JSON string. 
+        /// </summary>
+        /// <param name="jsonData"></param>
+        /// <returns>List of People object</returns>
         private List<People> FetchPeopleData(string jsonData)
         {
             List<People> peopleList= null;
